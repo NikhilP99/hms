@@ -15,8 +15,6 @@ router.post('/register',async (req,res)=>{
         })
     }
 
-    console.log({user: email,password,userType,name})
-
     var user = await User.findOne({email: email})
 
     if(user){
@@ -34,7 +32,7 @@ router.post('/register',async (req,res)=>{
         password: password,
         userType: userType
     })
-
+    console.log("created user:",{email,password,userType,name})
     await newUser.save()
 
     res.json({
@@ -82,12 +80,15 @@ router.post('/login', async (req,res) => {
         email,
         userType: user.userType
     }
-
+    
     jwt.sign(userData,"secretkey", {expiresIn: '2d'}, (err,token) => {
         console.log("User " + email + ": Logged in successfully!")
         console.log(token)
         res.json({
             success: true,
+            email: user.email,
+            name: user.name,
+            userType: user.userType,
             token: token
         })
     })

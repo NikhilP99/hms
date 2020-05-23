@@ -1,6 +1,10 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+
+import {register} from '../../store/actions/auth'
+
 
 class Register extends Component {
 
@@ -27,7 +31,7 @@ class Register extends Component {
         this.setState({userType: e.target.value})
     }
 
-    onSubmit = () => {
+    onSubmit = async () => {
         let {email,name,password,userType} = this.state
 
         if(email.trim()!=="" && name.trim()!=="" && password.trim()!==""){
@@ -37,7 +41,9 @@ class Register extends Component {
                 name,
                 password
             }
-            console.log(user)
+
+            await this.props.register(user)
+            console.log(this.props.auth)
         }
     }
 
@@ -76,5 +82,14 @@ class Register extends Component {
     }
 }
 
+const mapStateToProps = ({auth}) => {
+    return {
+        auth: auth
+    }
+}
 
-export default Register
+const mapDispatchToProps = {
+    register: register
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Register)

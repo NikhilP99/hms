@@ -1,7 +1,9 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
+import {login} from '../../store/actions/auth'
 
 class Login extends Component {
 
@@ -10,7 +12,7 @@ class Login extends Component {
         password: "",
     }
 
-    onSubmit = () => {
+    onSubmit = async () => {
         let {email, password} = this.state
 
         if(email.trim()!=="" && password.trim()!==""){
@@ -18,10 +20,9 @@ class Login extends Component {
                 email,
                 password
             }
-
-            console.log(user)
+            await this.props.login(user)
+            console.log(this.props.auth)
         }
-
     }
 
     passChange = (e) => {
@@ -56,5 +57,14 @@ class Login extends Component {
     }
 }
 
+const mapStateToProps = ({auth}) => {
+    return {
+        auth: auth
+    }
+}
 
-export default Login
+const mapDispatchToProps = {
+    login: login
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login)
