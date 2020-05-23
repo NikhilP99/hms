@@ -5,6 +5,8 @@ import NavBar from './components/NavBar'
 import Home from './routes/home/Home'
 import About from './routes/about/About'
 import Auth from './routes/auth/Auth'
+import ProtectedRoute from './components/ProtectedRoute'
+import StudentDashboard from './routes/student_dashboard/StudentDashboard'
 
 
 class App extends Component {
@@ -17,6 +19,7 @@ class App extends Component {
           <Route path='/home' component={Home} />
           <Route path='/about' component={About} />
           <Route path='/auth' component={Auth} />
+          <ProtectedRoute path='/student_dashboard' forUserType="Student" component={StudentDashboard} />
         </Switch>
       </BrowserRouter>
     )
