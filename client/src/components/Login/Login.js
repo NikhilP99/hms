@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import {withRouter} from 'react-router-dom'
 
 import {login} from '../../store/actions/auth'
 
@@ -21,7 +22,20 @@ class Login extends Component {
                 password
             }
             await this.props.login(user)
-            console.log(this.props.auth)
+            switch(this.props.auth.userType){
+                case "Student":
+                    this.props.history.push('/student_dashboard')
+                    break
+                case "Doctor":
+                    this.props.history.push('/doctor_dashboard')
+                    break
+                case "Admin":
+                    this.props.history.push('/admin_panel')
+                    break
+                default: //hospital official
+                    this.props.history.push('/staff_panel')
+                    break
+            }
         }
     }
 
@@ -67,4 +81,4 @@ const mapDispatchToProps = {
     login: login
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Login)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Login))

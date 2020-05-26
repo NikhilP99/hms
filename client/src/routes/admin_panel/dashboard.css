@@ -1,0 +1,9 @@
+
+.heading-row {
+    margin-top: 75px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
