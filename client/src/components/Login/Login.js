@@ -13,7 +13,7 @@ class Login extends Component {
         password: "",
     }
 
-    onSubmit = async () => {
+    onSubmit = () => {
         let {email, password} = this.state
 
         if(email.trim()!=="" && password.trim()!==""){
@@ -21,21 +21,7 @@ class Login extends Component {
                 email,
                 password
             }
-            await this.props.login(user)
-            switch(this.props.auth.userType){
-                case "Student":
-                    this.props.history.push('/student_dashboard')
-                    break
-                case "Doctor":
-                    this.props.history.push('/doctor_dashboard')
-                    break
-                case "Admin":
-                    this.props.history.push('/admin_panel')
-                    break
-                default: //hospital official
-                    this.props.history.push('/staff_panel')
-                    break
-            }
+            this.props.login(user)
         }
     }
 

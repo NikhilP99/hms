@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {LOGIN, LOGOUT, REGISTER_ERR, REGISTER_SUCCESS} from '../helpers/constants'
-import {serverURL} from '../../config'
+import {serverURL,history} from '../../config'
 
 export const login = (data) => dispatch => {
     axios.post(serverURL + '/auth/login',
@@ -27,6 +27,24 @@ export const login = (data) => dispatch => {
                     userType: res.data.userType
                 }
             })
+
+            switch(res.data.userType){
+                case "Student":
+                    history.push('/student_dashboard')
+                    break
+                case "Admin":
+                    history.push('/admin_panel')
+                    break
+                case "Doctor":
+                    history.push('/doctor_dashboard')
+                    break
+                case "Hospital Official":
+                    history.push('/staff_panel')
+                    break
+                default:
+                    dispatch({type: LOGOUT})
+            }
+            
         }else{
             localStorage.removeItem('my-jwt')
             dispatch({
