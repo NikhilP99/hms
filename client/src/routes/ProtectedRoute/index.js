@@ -11,12 +11,18 @@ class ProtectedRoute extends Component {
                 )
             }else{
                 return(
-                    <Redirect to='home' />
+                    <Redirect to={{
+                        pathname: '/forbidden',
+                        state: { from: this.props.location }
+                    }} />
                 )
             }
         }else{
             return (
-                <Redirect to="/auth" />
+                <Redirect to={{
+                    pathname: '/auth',
+                    state: { from: this.props.location }
+                }} />
             )
         }
     }

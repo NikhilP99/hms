@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {withRouter} from 'react-router-dom'
 
-import {login} from '../../store/actions/auth'
+import {login} from '../../store/auth/actions'
 
 class Login extends Component {
 

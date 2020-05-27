@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {LOGIN, LOGOUT, REGISTER_ERR, REGISTER_SUCCESS} from '../helpers/constants'
 import {serverURL} from '../../config'
 
 export const login = (data) => dispatch => {
@@ -19,7 +20,7 @@ export const login = (data) => dispatch => {
             localStorage.setItem('my-jwt',res.data.token)
 
             dispatch({
-                type: "LOGIN",
+                type: LOGIN,
                 payload: {
                     email: res.data.email,
                     name: res.data.name,
@@ -29,7 +30,7 @@ export const login = (data) => dispatch => {
         }else{
             localStorage.removeItem('my-jwt')
             dispatch({
-                type: "LOGOUT"
+                type: LOGOUT
             })
         }
     })
@@ -54,11 +55,11 @@ export const register = (data) => dispatch => {
         if(res && res.data && res.data.success){
 
             dispatch({
-                type: "REGISTER_SUCCESS"
+                type: REGISTER_SUCCESS
             })
         }else{
             dispatch({
-                type: "REGISTER_ERR"
+                type: REGISTER_ERR
             })
         }
     })
@@ -66,5 +67,5 @@ export const register = (data) => dispatch => {
 }
 
 export const logout = () => dispatch => {
-    dispatch({type: "LOGOUT"})
+    dispatch({type: LOGOUT})
 }

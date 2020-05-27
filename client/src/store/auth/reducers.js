@@ -1,3 +1,6 @@
+import {LOGIN, LOGOUT, REGISTER_ERR, REGISTER_SUCCESS} from '../helpers/constants'
+
+
 let initialState = {
     email: "",
     name: "",
@@ -8,7 +11,7 @@ let initialState = {
 
 export default function(state = initialState, action){
     switch(action.type){
-        case "LOGIN":
+        case LOGIN:
             return {
                 ...state,
                 email: action.payload.email,
@@ -16,16 +19,16 @@ export default function(state = initialState, action){
                 userType: action.payload.userType,
                 loggedIn: true
             }
-        case "LOGOUT":
+        case LOGOUT:
             return initialState
 
-        case "REGISTER_SUCCESS":
+        case REGISTER_SUCCESS:
             return {
                 ...state,
                 regSuccess: true
             }
         
-        case "REGISTER_ERR":
+        case REGISTER_ERR:
             return {
                 ...state,
                 regSuccess: false

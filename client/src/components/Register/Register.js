@@ -1,9 +1,9 @@
-import React,{Component} from 'react'
+import React,{Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
-import {register} from '../../store/actions/auth'
+import {register} from '../../store/auth/actions'
 
 
 class Register extends Component {

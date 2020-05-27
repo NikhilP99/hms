@@ -4,7 +4,8 @@ import Nav from 'react-bootstrap/Nav'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import {logout} from '../../store/actions/auth'
+import {logout} from '../../store/auth/actions'
+
 
 class NavBar extends Component {
 
