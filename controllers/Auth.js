@@ -1,13 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../models/User')
+const Staff = require('../models/Staff')
+const Doctor = require('../models/Doctor')
+const Student = require('../models/Student')
 const jwt = require('jsonwebtoken')
 
+//for  student/patiennt only
 router.post('/register',async (req,res)=>{
-    var {email,password,userType,name} = req.body
 
-    if(email==="" || password==="" || name==="" || userType===""){
-        res.status(400)
+    var {email,password,name,height,weight,roll_number,dob,gender} = req.body
+
+    if(email==="" || password==="" || name===""){ //better validation here
         res.json({
             status: 400,
             success: false,
@@ -15,28 +18,33 @@ router.post('/register',async (req,res)=>{
         })
     }
 
-    var user = await User.findOne({email: email})
+    var s1 = await Student.findOne({email: email})
+    var s2 = await Student.findOne({roll_number: roll_number})
 
-    if(user){
-        res.status(400)
+    if(s1 || s2){
         res.json({
             status: 400,
             success: false,
-            message: "user already exists"
+            message: "Student with same email or roll number already exists!"
         })
     }
 
-    var newUser = new User({
-        email: email,
-        name: name,
-        password: password,
-        userType: userType
+    var newUser = new Student({
+        email,
+        name,
+        password,
+        height,
+        weight,
+        dob,
+        roll_number,
+        gender
     })
-    console.log("created user:",{email,password,userType,name})
+    console.log("created Student:",{email,password,name})
     await newUser.save()
 
     res.json({
         success: true,
+        email,
         message: "User created successfully. Proceed to login."
     })
 
@@ -45,9 +53,9 @@ router.post('/register',async (req,res)=>{
 
 
 router.post('/login', async (req,res) => {
-    var {email, password} = req.body
+    var {email, password, userType} = req.body
 
-    if(email==="" || password===""){
+    if(email==="" || password==="" || userType===""){   //better validation
         res.status(400)
         res.json({
             status: 400,
@@ -56,10 +64,24 @@ router.post('/login', async (req,res) => {
         })
     }
 
-    var user = await User.findOne({email: email})
+    let user;
 
+    switch(userType){
+        case "Doctor":
+            user = await Doctor.findOne({email: email})
+            break;
+        case "Student":
+            user = await Student.findOne({email: email})
+            break;
+        default: //staff
+            user = await Staff.findOne({email: email})
+            if(user.userType !== userType){
+                user = null
+            }
+            break;
+    }
+    
     if(!user){
-        res.status(400)
         res.json({
             status: 400,
             success: false,
@@ -68,7 +90,6 @@ router.post('/login', async (req,res) => {
     }
 
     if(user.password !== password){
-        res.status(401)
         res.json({
             status: 401,
             success: false,
@@ -82,7 +103,7 @@ router.post('/login', async (req,res) => {
     }
     
     jwt.sign(userData,"secretkey", {expiresIn: '2d'}, (err,token) => {
-        console.log("User " + email + ": Logged in successfully!")
+        console.log(userType + ": " + email + " has Logged in successfully!")
         console.log(token)
         res.json({
             success: true,

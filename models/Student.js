@@ -50,6 +50,13 @@ const StudentSchema = new Schema({
         unique: false,
         trim: true
     },
+    userType: {
+        type: String,
+        required: true,
+        unique: false,
+        trim: true,
+        default: "Student"
+    },
     // see this: https://mongoosejs.com/docs/populate.html#population
     appointments: {
         type: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],

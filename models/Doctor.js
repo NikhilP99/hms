@@ -38,6 +38,13 @@ const DoctorSchema = new Schema({
         unique: false,
         trim: true
     },
+    userType: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: false,
+        default: "Doctor"
+    },
     // see this: https://mongoosejs.com/docs/populate.html#population
     expertise: {
         type: [{ type: String, trim:true }],
