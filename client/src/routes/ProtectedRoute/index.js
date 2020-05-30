@@ -20,7 +20,7 @@ class ProtectedRoute extends Component {
         }else{
             return (
                 <Redirect to={{
-                    pathname: '/auth',
+                    pathname: '/login',
                     state: { from: this.props.location }
                 }} />
             )

@@ -12,7 +12,7 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const createAdmin = async () => {
+const createSuperAdmin = async () => {
     let admin = Staff.findOne({email: 'admin'})
     if(admin){
         console.log("Super admin exists")
@@ -35,7 +35,7 @@ const dbURL = "mongodb://localhost/hms"
 mongoose.connect(dbURL, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 mongoose.connection.once('open', () => {
     console.log("Mongodb is now connected.")
-    createAdmin()
+    createSuperAdmin()
 }).on('error', () => {
     console.log("Couldn't connect to database.")
 })

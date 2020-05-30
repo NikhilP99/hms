@@ -6,7 +6,8 @@ export const login = (data) => dispatch => {
     axios.post(serverURL + '/auth/login',
         {
             email: data.email,
-            password: data.password
+            password: data.password,
+            userType: data.userType
         },
         {
             headers: {
@@ -15,7 +16,7 @@ export const login = (data) => dispatch => {
         }
     )
     .then(res => {
-        console.log('response',res)
+        console.log('response:',res)
         if(res && res.data && res.data.success && res.data.token!==""){
             localStorage.setItem('my-jwt',res.data.token)
 
@@ -38,11 +39,12 @@ export const login = (data) => dispatch => {
                 case "Doctor":
                     history.push('/doctor_dashboard')
                     break
-                case "Hospital Official":
+                case "Staff":
                     history.push('/staff_panel')
                     break
                 default:
                     dispatch({type: LOGOUT})
+                    break
             }
             
         }else{
@@ -61,7 +63,11 @@ export const register = (data) => dispatch => {
             email: data.email,
             password: data.password,
             name: data.name,
-            userType: data.userType
+            dob: data.dob,
+            roll_number: data.roll_number,
+            height: data.height,
+            weight: data.weight,
+            gender: data.gender
         },
         {
             headers: {
@@ -75,6 +81,7 @@ export const register = (data) => dispatch => {
             dispatch({
                 type: REGISTER_SUCCESS
             })
+            history.push('/login')
         }else{
             dispatch({
                 type: REGISTER_ERR

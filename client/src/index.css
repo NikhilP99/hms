@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container {
+  margin-top: 50px;
+}
+
+.heading {
+  margin-bottom: 30px;
+}
+
+.submit-button {
+  margin: 40px; 
+}
