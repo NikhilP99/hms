@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {LOGIN, LOGOUT, REGISTER_ERR, REGISTER_SUCCESS} from '../helpers/constants'
+import {LOGIN, LOGOUT, OPEN_MODAL} from '../helpers/constants'
 import {serverURL,history} from '../../config'
 
 export const login = (data) => dispatch => {
@@ -52,9 +52,22 @@ export const login = (data) => dispatch => {
             dispatch({
                 type: LOGOUT
             })
+
+            dispatch({
+                type: OPEN_MODAL,
+                title: "Failed",
+                message: "Failed to login, please try again."
+            })
         }
     })
-    .catch(res => {return Promise.reject(res)})
+    .catch(err => {
+        dispatch({
+            type: OPEN_MODAL,
+            title: "Error",
+            message: err.message
+        })
+        return Promise.reject(err)
+    })
 }
 
 export const register = (data) => dispatch => {
@@ -77,18 +90,28 @@ export const register = (data) => dispatch => {
     )
     .then(res => {
         if(res && res.data && res.data.success){
-
             dispatch({
-                type: REGISTER_SUCCESS
+                type: OPEN_MODAL,
+                title: "Success",
+                message: "Please proceed to login"
             })
             history.push('/login')
         }else{
             dispatch({
-                type: REGISTER_ERR
+                type: OPEN_MODAL,
+                title: "Registration failed",
+                message: "Please try again. If it doesn't work, contact admin."
             })
         }
     })
-    .catch(res => {return Promise.reject(res)})
+    .catch(err => {
+        dispatch({
+            type: OPEN_MODAL,
+            title: "Error",
+            message: err.message
+        })
+        return Promise.reject(err)
+    })
 }
 
 export const logout = () => dispatch => {

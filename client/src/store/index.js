@@ -6,9 +6,11 @@ import { combineReducers } from 'redux'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
  
 import authReducer from './auth/reducers'
+import modalReducer from './modal/reducers'
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  modal: modalReducer
 })
  
 const persistConfig = {

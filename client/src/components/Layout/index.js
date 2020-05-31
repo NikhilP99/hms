@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import NavBar from '../NavBar';
+import Modal from '../Modal'
 
 const Layout = props => {
 	return (
@@ -8,6 +9,7 @@ const Layout = props => {
 			<div className='container '>
 				{props.children}
 			</div>
+			<Modal />
 		</Fragment>
 	);
 };

@@ -1,6 +1,7 @@
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
-export const REGISTER_ERR = "REGISTER_ERR"
+export const OPEN_MODAL = "OPEN_MODAL"
+export const CLOSE_MODAL = "CLOSE_MODAL"
+
 
 
