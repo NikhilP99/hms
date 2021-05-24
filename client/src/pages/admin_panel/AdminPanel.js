@@ -5,11 +5,13 @@ import Col from 'react-bootstrap/Col'
 
 import './dashboard.css'
 import Layout from '../../components/Layout'
+import SideNav from '../../components/SideNav'
 
 class AdminPanel extends Component {
     render(){
         return(
             <Layout>
+                <SideNav />
                 <Container>
                     <Row className="heading-row">
                         <Col sm={3}></Col>
